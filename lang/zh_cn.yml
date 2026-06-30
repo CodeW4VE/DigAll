@@ -1,0 +1,14 @@
+dig_all:
+  summary_help: "§7维护 \"Diggy Diggy All\" 总计（在线 + 离线 + 历史玩家）"
+  command:
+    sidebar_set: "§a已在侧边栏显示 Diggy Diggy All 总计。"
+  reseed:
+    no_rcon: "§cRCON 不可用。请在 MCDR 配置以及 server.properties 中启用 RCON。"
+    done: "§a[DigAll] 已重建离线基准值：§e{0:,}§a 次挖掘。"
+    detail: "§7  离线玩家: {0} | 在线(实时): {1} | {2} 中的 bot: {3} | 已扫描名称: {4}"
+  status:
+    line: "§a[DigAll] 实时总计: §e{0:,}§a  (离线 §e{1:,}§a + 在线 §e{2:,}§a)"
+  help:
+    show: "在侧边栏显示 Diggy Diggy All 总计"
+    reseed: "从统计文件重建离线基准值（自愈）"
+    status: "显示当前的实时总计及其明细"

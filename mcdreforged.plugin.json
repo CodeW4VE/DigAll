@@ -1,0 +1,19 @@
+{
+	"id": "dig_all",
+	"version": "4.1.1",
+	"name": "DigAll",
+	"description": {
+		"en_us": "Maintains an offline-player baseline so the DiggyScoreboard datapack can show a real-time grand total that includes offline and historical players, with bots excluded",
+		"zh_cn": "维护离线玩家的基准值，使 DiggyScoreboard 数据包能够实时显示包含离线与历史玩家的总计（排除 bot）"
+	},
+	"author": [
+		"TVTvirus"
+	],
+	"link": "https://github.com/CodeW4VE/DigAll",
+	"dependencies": {
+		"mcdreforged": ">=2.1.0"
+	},
+	"resources": [
+		"lang"
+	]
+}

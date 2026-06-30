@@ -1,0 +1,14 @@
+dig_all:
+  summary_help: "§7Maintain the \"Diggy Diggy All\" grand total (online + offline + historical)"
+  command:
+    sidebar_set: "§aDisplaying the Diggy Diggy All total on the sidebar."
+  reseed:
+    no_rcon: "§cRCON is not available. Enable RCON in the MCDR config and in server.properties."
+    done: "§a[DigAll] Offline baseline reseeded: §e{0:,}§a digs."
+    detail: "§7  offline diggers: {0} | online (live): {1} | bots in {2}: {3} | names scanned: {4}"
+  status:
+    line: "§a[DigAll] live Total: §e{0:,}§a  (offline §e{1:,}§a + online §e{2:,}§a)"
+  help:
+    show: "Set the Diggy Diggy All total on the sidebar"
+    reseed: "Rebuild the offline baseline from the stats files (self-heal)"
+    status: "Show the current live Total and its breakdown"
