@@ -48,20 +48,20 @@ Two gotchas it handles:
 
 `config/dig_all/config.json` (generated on first run). Key fields:
 
-- `bot_team` — Carpet bot team to exclude (e.g. `zBots`).
-- `aliases` — manual UUID -> name for players whose name history was wiped. The shipped
+- `bot_team`: Carpet bot team to exclude (e.g. `zBots`).
+- `aliases`: manual UUID -> name for players whose name history was wiped. The shipped
   example is the author's own account (`TVTvirus`); replace it with your own.
-- `reseed_interval_minutes` — periodic self-heal (`0` = only on start + manual reseed).
+- `reseed_interval_minutes`: periodic self-heal (`0` = only on start + manual reseed).
 
 > Hammering RCON from outside can drop MCDR's internal RCON connection (`!!dig-all` then says
 > "RCON not available"). A server restart fixes it: MCDR reconnects and reseeds on boot.
 
 ## Credits
 
-- **[DiggyScoreboard](https://github.com/Fallen-Breath/DiggyScoreboard)** — Fallen_Breath (the base datapack this builds on).
-- **[StatsHelper](https://github.com/TISUnion/StatsHelper)** — TISUnion (UUID -> name mapping).
-- **UUID / rename de-duplication fix** in StatsHelper — [KarlaPrz02](https://github.com/KarlaPrz02) (Katherina).
-- **Total layer, offline baseline & integration** — TVTvirus ([MineWave](https://w4ve.xyz/)).
+- **[DiggyScoreboard](https://github.com/Fallen-Breath/DiggyScoreboard)**: Fallen_Breath (the base datapack this builds on).
+- **[StatsHelper](https://github.com/TISUnion/StatsHelper)**: TISUnion (UUID -> name mapping).
+- **UUID / rename de-duplication fix** in StatsHelper, by [KarlaPrz02](https://github.com/KarlaPrz02) (Katherina).
+- **Total layer, offline baseline & integration**: TVTvirus ([MineWave](https://w4ve.xyz/)).
 
 ## License
 
