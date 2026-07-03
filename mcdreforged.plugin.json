@@ -1,6 +1,6 @@
 {
 	"id": "dig_all",
-	"version": "4.2.0",
+	"version": "4.2.1",
 	"name": "DigAll",
 	"description": {
 		"en_us": "Maintains an offline-player baseline so the DiggyScoreboard datapack can show a real-time grand total that includes offline and historical players, with bots excluded",
