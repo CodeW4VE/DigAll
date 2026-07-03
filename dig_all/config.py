@@ -11,7 +11,11 @@ class Config(Serializable):
 	# Example: ['TVTvirus_old']
 	exclude_names: List[str] = []
 	# Periodic self-heal reseed in minutes; 0 = only on server start and manual reseed.
-	reseed_interval_minutes: int = 0
+	# The baseline is kept incrementally by join/leave events, which MC/MCDR miss or duplicate
+	# on crashes, timeouts, restarts and reloads; any skew then persists until the next reseed.
+	# A periodic reseed rebuilds the baseline from the stats files (which never drift), so the
+	# Total self-heals instead of slowly wandering off until someone runs !!dig-all reseed.
+	reseed_interval_minutes: int = 30
 	# Where vanilla statistics live; stats_dir empty -> '<server_path>/<world_folder>/stats'.
 	server_path: str = './server'
 	world_folder: str = 'world'

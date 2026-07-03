@@ -86,33 +86,41 @@ def do_reseed(server: ServerInterface) -> Optional[ReseedResult]:
 	baseline = {category: 0 for category in constants.DigObjectives}
 	offline_diggers = 0
 
-	if players is not None:
-		for name, digs in players.items():
-			if not eligible(name) or name.lower() in online:
-				continue  # online players are summed live by the datapack
-			for category, objective in constants.DigObjectives.items():
-				server.execute('scoreboard players set {} {} {}'.format(name, objective, digs[category]))
-			for category in baseline:
-				baseline[category] += digs[category]
-			offline_diggers += 1
-		source, scanned = 'stats', len(players)
-	else:
-		names = get_tracked_names(server)
-		for name in names:
-			if not eligible(name) or name.lower() in online:
-				continue
-			value = get_score(server, name, constants.DigObjectives['all'])
-			if value == 0 or abs(value) > constants.MaxSaneScore:
-				continue  # 0 = untracked, huge = overflowed bot score
-			baseline['all'] += value
-			for category in ('pickaxe', 'axe', 'shovel', 'hoe', 'shears'):
-				baseline[category] += get_score(server, name, constants.DigObjectives[category])
-			offline_diggers += 1
-		source, scanned = 'scoreboard', len(names)
+	# Silence the scoreboard writes below: each one otherwise broadcasts a
+	# "Set [dig-*] for X to N" line to every online op, and with a periodic reseed
+	# that is a burst of ~1k lines on an interval. Self-suppressing pattern (same as
+	# adjust_baseline): with feedback off, even turning it back on stays quiet.
+	server.execute('gamerule sendCommandFeedback false')
+	try:
+		if players is not None:
+			for name, digs in players.items():
+				if not eligible(name) or name.lower() in online:
+					continue  # online players are summed live by the datapack
+				for category, objective in constants.DigObjectives.items():
+					server.execute('scoreboard players set {} {} {}'.format(name, objective, digs[category]))
+				for category in baseline:
+					baseline[category] += digs[category]
+				offline_diggers += 1
+			source, scanned = 'stats', len(players)
+		else:
+			names = get_tracked_names(server)
+			for name in names:
+				if not eligible(name) or name.lower() in online:
+					continue
+				value = get_score(server, name, constants.DigObjectives['all'])
+				if value == 0 or abs(value) > constants.MaxSaneScore:
+					continue  # 0 = untracked, huge = overflowed bot score
+				baseline['all'] += value
+				for category in ('pickaxe', 'axe', 'shovel', 'hoe', 'shears'):
+					baseline[category] += get_score(server, name, constants.DigObjectives[category])
+				offline_diggers += 1
+			source, scanned = 'scoreboard', len(names)
 
-	for category, value in baseline.items():
-		server.execute('scoreboard players set {} {} {}'.format(
-			constants.OfflineHolders[category], constants.HelperObjective, value))
+		for category, value in baseline.items():
+			server.execute('scoreboard players set {} {} {}'.format(
+				constants.OfflineHolders[category], constants.HelperObjective, value))
+	finally:
+		server.execute('gamerule sendCommandFeedback true')
 
 	server.logger.info(
 		'Reseeded offline baseline #off_all={:,} from {} offline digger(s) '
@@ -125,9 +133,15 @@ def adjust_baseline(server: ServerInterface, player: str, joined: bool):
 	"""Keep the baseline complementary to the live sum: on join the datapack starts counting the
 	player, so subtract them from the baseline; on leave, fold their current scores back in."""
 	operation = '-=' if joined else '+='
-	for category, objective in constants.DigObjectives.items():
-		server.execute('scoreboard players operation {} {} {} {} {}'.format(
-			constants.OfflineHolders[category], constants.HelperObjective, operation, player, objective))
+	# Silence the bookkeeping: without this, every join/leave broadcasts one
+	# "Set [dig-helper] ..." line per category to online ops. Self-suppressing pattern.
+	server.execute('gamerule sendCommandFeedback false')
+	try:
+		for category, objective in constants.DigObjectives.items():
+			server.execute('scoreboard players operation {} {} {} {} {}'.format(
+				constants.OfflineHolders[category], constants.HelperObjective, operation, player, objective))
+	finally:
+		server.execute('gamerule sendCommandFeedback true')
 
 
 # --------------------------------------------------------------------------- #

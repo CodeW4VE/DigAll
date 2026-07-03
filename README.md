@@ -51,7 +51,10 @@ Two gotchas it handles:
 - `bot_team`: Carpet bot team to exclude (e.g. `zBots`).
 - `aliases`: manual UUID -> name for players whose name history was wiped. The shipped
   example is the author's own account (`TVTvirus`); replace it with your own.
-- `reseed_interval_minutes`: periodic self-heal (`0` = only on start + manual reseed).
+- `reseed_interval_minutes`: periodic self-heal from the stats files (default `30`; `0` = only
+  on start + manual reseed). The offline baseline is kept incrementally by join/leave events, which
+  get missed or duplicated on crashes, timeouts, restarts and reloads; the periodic reseed rebuilds
+  it from the stats (which never drift) so the Total does not slowly wander off.
 
 > Hammering RCON from outside can drop MCDR's internal RCON connection (`!!dig-all` then says
 > "RCON not available"). A server restart fixes it: MCDR reconnects and reseeds on boot.
