@@ -64,7 +64,7 @@ Two gotchas it handles:
 - **[DiggyScoreboard](https://github.com/Fallen-Breath/DiggyScoreboard)**: Fallen_Breath (the base datapack this builds on).
 - **[StatsHelper](https://github.com/TISUnion/StatsHelper)**: TISUnion (UUID -> name mapping).
 - **UUID / rename de-duplication fix** in StatsHelper, by [KarlaPrz02](https://github.com/KarlaPrz02) (Katherina).
-- **Total layer, offline baseline & integration**: TVTvirus ([MineWave](https://w4ve.xyz/)).
+- **Total layer, offline baseline & integration**: TVTvirus ([MineWave](https://discord.gg/keyy8As)).
 
 ## License
 
